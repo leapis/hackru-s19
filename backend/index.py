@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse, Message
 from twilio.rest import Client
 
@@ -9,11 +9,13 @@ app = Flask(__name__)
 def index():
     return 'Hello, World!'
 
-@app.route('/sms', methods=['POST'])
+@app.route('/sms', methods=['POST','GET'])
 def textfrom():
     echo = MessagingResponse()
 
-    echo.message(request.form['Body'])
+    print(request.form['Body'])
+
+    echo.message("HELLO FROM FLASK")
 
     return(str(echo))
 
