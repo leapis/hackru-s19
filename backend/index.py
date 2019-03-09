@@ -13,9 +13,7 @@ def index():
 def textfrom():
     echo = MessagingResponse()
 
-    echo = request.form['Body']
+    echo.message(request.form['Body'])
 
-    response.message(echo)
-
-    return(str(response))
+    return(str(echo))
 
