@@ -1,4 +1,4 @@
-FROM nitincypher/docker-ubuntu-python-pip
+FROM python:3.7-stretch
 
 ADD requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt --no-cache-dir
