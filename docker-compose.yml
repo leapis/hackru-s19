@@ -14,3 +14,5 @@ services:
         environment:
             FLASK_ENV: development
             FLASK_APP: index.py
+    redis:
+        image: redis:5.0-alpine
