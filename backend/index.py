@@ -11,11 +11,14 @@ def index():
 
 @app.route('/sms', methods=['POST','GET'])
 def textfrom():
+
+    body = request.values.get('Body', None)
+
+    print(body)
+
     echo = MessagingResponse()
 
-    print(request.form['Body'])
-
-    echo.message("HELLO FROM FLASK")
+    echo.message("hello")
 
     return(str(echo))
 
