@@ -16,5 +16,3 @@ services:
             FLASK_APP: index.py
     redis:
         image: redis:5.0-alpine
-        ports:
-            - "6380:6380"
