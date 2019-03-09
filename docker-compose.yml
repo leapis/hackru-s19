@@ -14,3 +14,4 @@ services:
         environment:
             FLASK_ENV: development
             FLASK_APP: index.py
+            PYPPETEER_HOME: /pyppeteer
