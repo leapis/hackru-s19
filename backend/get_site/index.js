@@ -1,9 +1,11 @@
 const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const iPhone = devices['iPhone 6'];
-
 var redis = require("redis"),
 	client = redis.createClient("redis://redis:6379/0");
+
+const {promisify} = require('util');
+const getAsync = promisify(client.get).bind(client);
 
 client.on("error", function (err) {
 	console.log("Redis Error " + err);
@@ -14,6 +16,11 @@ var url = "" + process.argv.slice(2);
 var pathSeed = Math.floor(Math.random() * 10000000);
 
 (async () => {
+	const res = await getAsync(url);
+	if(res != undefined){
+		console.log(res + " unknown");
+		process.exit(0);
+	}
 	const browser = await puppeteer.launch({args: ['--no-sandbox','--disable-setuid-sandbox']});
 	const page = await browser.newPage();
 	await page.goto(url);
@@ -34,6 +41,7 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 		client.hmset(pathSeed + ":" + i, hbb[i]);
 	}
 	var pageTitle = await page.title();
+	client.set(url,pathSeed);
 	await browser.close();
 	client.quit();
 
