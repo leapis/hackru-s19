@@ -12,6 +12,7 @@ def compress_image(src_image):
 
     image_file = Image.open(file).convert("L")
     original_image = np.array(image_file)
+    original_shape = original_image.shape
     original_image = skimage.measure.block_reduce(original_image, (3,3), np.average)
     shape = original_image.shape
     image = original_image.reshape(-1, 1)
@@ -31,10 +32,12 @@ def compress_image(src_image):
     result = BytesIO()
     io.imsave(result, image)
     result = base64.b64encode(result.getvalue());
-    return result
+    return (result,) + original_shape
 
 def compress(jsontable, encoded_image):
     encoded = base64.b64decode(encoded_image.encode("ascii"))
-    compressed =  compress_image(encoded).decode("ascii")
-    print(len(compressed))
+    compressed, h, w =  compress_image(encoded)
+    compressed = compressed.decode("ascii")
     jsontable["i"] = compressed
+    jsontable["w"] = w
+    jsontable["h"] = h
