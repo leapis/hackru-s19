@@ -9,7 +9,7 @@ from textwrap import wrap
 
 
 
-client = Client('AC4f12756b126ebd6aa4153488daf82495', '15640a307f38d8f85ee6e8284937ef1d')
+#client = Client('AC4f12756b126ebd6aa4153488daf82495', '15640a307f38d8f85ee6e8284937ef1d')
 app = Flask(__name__)
 
 @app.route('/')
@@ -27,11 +27,11 @@ def textfrom():
 
     print(txtnumbers)
 
-    echo = MessagingResponse()
+   # echo = MessagingResponse()
 
     if(txtnumbers == "error"):
         print("Error Reported From NodeJs Script")
-        echo.message(txtnumbers)
+   #     echo.message(txtnumbers)
     else:
         decodedtxt = txtnumbers.decode("utf-8")
         databasekey = decodedtxt.split(" ",1)[0]
@@ -42,7 +42,8 @@ def textfrom():
 
         jsontable = redistojson(databasekey, pagename)        
         
-
+        return(jsontable)
+'''
         #variable for max message size
         n = 1500
 
@@ -72,8 +73,7 @@ def textfrom():
         print(message.body)
         print(len(jsontable))
 
-
-    return(jsontable)
+'''
 
 
 def urltopng(url):
@@ -88,12 +88,12 @@ def urltopng(url):
     print(output.returncode)
     if(output.returncode == 1):
             return "error"
+    print("STDOUT: %s" % stdout)
 
     return stdout
 
 
 def redistojson(key, title):
-    conn = redis.from_url("redis://redis:6379/0")
     conn = redis.StrictRedis(
         host="redis",
         port=6379,
@@ -102,7 +102,14 @@ def redistojson(key, title):
     )
     jsontable = {}
     jsontable["title"] = title
-    jsontable["links"] = conn.get("%s:*" % key) 
+    keys = conn.keys("%s:*" % key) 
+    links = []
+    jsontable["links"] = links
+    for _key in keys:
+        result = conn.hgetall(_key)
+        if result is None:
+            continue
+        links.append(result)
 
     encode.compress(jsontable, conn.get(key))
 
