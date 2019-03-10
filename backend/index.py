@@ -13,7 +13,8 @@ def index():
 def textfrom():
 
     body = request.values.get('Body', None)
-
+    
+    #Where the URL should come in at
     print(body)
 
     echo = MessagingResponse()
