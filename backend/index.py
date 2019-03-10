@@ -7,12 +7,15 @@ import json
 import encode
 from textwrap import wrap
 
-client = Client('AC1519f6c35abae292854d60746394de52', '48e3893e7ad7e865b6893ba175160fe4')
+
+
+client = Client('AC4f12756b126ebd6aa4153488daf82495', '15640a307f38d8f85ee6e8284937ef1d')
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     return 'Hello, World!'
+
 
 @app.route('/sms', methods=['POST','GET'])
 def textfrom():
@@ -50,8 +53,8 @@ def textfrom():
         message = client.messages \
             .create(
                  body='#0000%04d' % len(splittable)+splittable[0],
-                 from_='+16149831295',
-                 to='+17243132561'
+                 from_='+18332598513',
+                 to='+18337131276'
              )
 
         msgcounter = 1
@@ -60,8 +63,8 @@ def textfrom():
             message = client.messages \
                 .create(
                      body='%04d' % msgcounter + string,
-                     from_='+16149831295',
-                     to='+17243132561'
+                     from_='+18332598513',
+                     to='+18337131276'
                  )
             msgcounter = msgcounter + 1
 
@@ -69,9 +72,8 @@ def textfrom():
         print(message.body)
         print(len(jsontable))
 
-        echo.message(databasekey+"\n"+pagename)
 
-    return(str(echo))
+    return(jsontable)
 
 
 def urltopng(url):
