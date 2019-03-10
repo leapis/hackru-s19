@@ -10,7 +10,7 @@ client.on("error", function (err) {
 });
 
 function box(i, a){
-	client.hmset(pathSeed + ":" + i ,["url", a.href,"top",a.getBoundingClientRect().top, "left", a.getBoundingClientRect().left, "right", a.getBoundingClientRect().right,"bottom",a.getBoundingClientRect().bottom],function (err, res) {});
+	client.hmset(pathSeed + ":" + i ,["url", a.href,"top",a.getBoundingClientRect().top, "left", a.getBoundingClientRect().left, "right", a.getBoundingClientRect().right,"bottom",a.getBoundingClientRect().bottom],function (err, res) {console.error("REDIS: " + err);process.exit(1);});
 }
 
 
@@ -22,7 +22,7 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 	const page = await browser.newPage();
 	await page.goto(url);
 	await page.emulate(iPhone);
-	let screenshot = await page.screenshot({path: pathSeed + '.png', encoding: "base64"});//,fullPage: true});
+	let screenshot = await page.screenshot({encoding: "base64",fullPage:true});//,fullPage: true});
 	client.set(pathSeed, screenshot);
 	const hrefs = await page.$$eval('a', as => as.map(a => a.href));
 	function getBoxes(a){
@@ -43,4 +43,5 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 	console.log(pathSeed);
 })().catch((error) => {
         console.error("Puppeteer " + error);
+	process.exit(1);
 });
