@@ -38,7 +38,6 @@ def textfrom():
 
         jsontable = redistojson(databasekey, pagename)        
 
-        print(jsontable)
 
         echo.message(databasekey+"\n"+pagename)
 

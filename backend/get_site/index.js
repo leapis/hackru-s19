@@ -18,7 +18,7 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 	const page = await browser.newPage();
 	await page.goto(url);
 	await page.emulate(iPhone);
-	let screenshot = await page.screenshot({encoding: "base64",fullPage:true});
+	let screenshot = await page.screenshot({encoding: "base64"});
 	client.set(pathSeed, screenshot);
 	const hrefs = await page.$$eval('a', as => as.map(a => a.href));
 	function getBoxes(a){

@@ -43,4 +43,5 @@ def compress_image(src_image):
 def compress(jsontable, encoded_image):
     encoded = base64.b64decode(encoded_image.encode("ascii"))
     compressed =  compress_image(encoded).decode("ascii")
+    print(len(compressed))
     jsontable["i"] = compressed
