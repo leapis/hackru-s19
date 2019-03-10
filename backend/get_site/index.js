@@ -7,12 +7,8 @@ var redis = require("redis"),
 
 client.on("error", function (err) {
 	console.log("Redis Error " + err);
+	process.exit(1);
 });
-
-function box(i, a){
-	client.hmset(pathSeed + ":" + i ,["url", a.href,"top",a.getBoundingClientRect().top, "left", a.getBoundingClientRect().left, "right", a.getBoundingClientRect().right,"bottom",a.getBoundingClientRect().bottom],function (err, res) {console.error("REDIS: " + err);process.exit(1);});
-}
-
 
 var url = "" + process.argv.slice(2);
 var pathSeed = Math.floor(Math.random() * 10000000);
@@ -22,7 +18,7 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 	const page = await browser.newPage();
 	await page.goto(url);
 	await page.emulate(iPhone);
-	let screenshot = await page.screenshot({encoding: "base64",fullPage:true});//,fullPage: true});
+	let screenshot = await page.screenshot({encoding: "base64",fullPage:true});
 	client.set(pathSeed, screenshot);
 	const hrefs = await page.$$eval('a', as => as.map(a => a.href));
 	function getBoxes(a){
@@ -37,10 +33,11 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 	for(let i = 0; i < hbb.length; i++){
 		client.hmset(pathSeed + ":" + i, hbb[i]);
 	}
+	var pageTitle = await page.title();
 	await browser.close();
 	client.quit();
 
-	console.log(pathSeed);
+	console.log(pathSeed + " " + pageTitle);
 })().catch((error) => {
         console.error("Puppeteer " + error);
 	process.exit(1);

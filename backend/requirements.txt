@@ -1,3 +1,10 @@
 pyppeteer==0.0.25
 flask==1.0.2
 twilio==6.25.1
+redis==3.2.0
+scipy
+scikit-image
+sklearn
+numpy
+matplotlib
+pillow
