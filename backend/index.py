@@ -5,6 +5,7 @@ from subprocess import Popen, PIPE
 import redis
 import json
 import encode
+from textwrap import wrap
 
 client = Client('AC1519f6c35abae292854d60746394de52', '48e3893e7ad7e865b6893ba175160fe4')
 app = Flask(__name__)
@@ -37,7 +38,36 @@ def textfrom():
 
 
         jsontable = redistojson(databasekey, pagename)        
+        
 
+        #variable for max message size
+        n = 1500
+
+        splittable = [jsontable[i:i+n] for i in range(0, len(jsontable), n)]
+
+        print(splittable)
+
+        message = client.messages \
+            .create(
+                 body='#0000%04d' % len(splittable)+splittable[0],
+                 from_='+16149831295',
+                 to='+17243132561'
+             )
+
+        msgcounter = 1
+
+        for string in splittable[1:]:
+            message = client.messages \
+                .create(
+                     body='%04d' % msgcounter + string,
+                     from_='+16149831295',
+                     to='+17243132561'
+                 )
+            msgcounter = msgcounter + 1
+
+        print(len(splittable)) 
+        print(message.body)
+        print(len(jsontable))
 
         echo.message(databasekey+"\n"+pagename)
 
