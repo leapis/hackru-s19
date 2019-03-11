@@ -10,26 +10,29 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="117dp"
+        android:layout_height="80dp"
+        android:background="@color/primary"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="117dp"
+            android:layout_height="100dp"
+            android:clipChildren="false"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <EditText
+                android:id="@+id/searchBar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
+                android:layout_height="62dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="20dp"
+                android:text="http://www.google.com" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
