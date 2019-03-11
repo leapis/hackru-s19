@@ -9,10 +9,12 @@
     tools:showIn="@layout/activity_scrolling">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/mainImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:clickable="true"
+        android:contextClickable="true"
         android:src="@drawable/test"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="top|center" />

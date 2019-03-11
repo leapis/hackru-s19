@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">test</string>
+    <string name="app_name"></string>
     <string name="test">hello</string>
     <string name="action_settings">Settings</string>
 </resources>
