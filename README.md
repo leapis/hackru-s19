@@ -1,4 +1,4 @@
-### Gerald
+Won award for *Best Use of Google Cloud Platform*.
 
 ## Our Main Concept
 
