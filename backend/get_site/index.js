@@ -27,7 +27,6 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 	await page.emulate(iPhone);
 	let screenshot = await page.screenshot({encoding: "base64"});
 	client.set(pathSeed, screenshot);
-	const hrefs = await page.$$eval('a', as => as.map(a => a.href));
 	function getBoxes(a){
 		let i = 0;
 		let arr = [];
@@ -36,9 +35,9 @@ var pathSeed = Math.floor(Math.random() * 10000000);
 		}
 		return arr;
 	}
-	const hbb = await page.$$eval('a', getBoxes);
-	for(let i = 0; i < hbb.length; i++){
-		client.hmset(pathSeed + ":" + i, hbb[i]);
+	const hrefs = await page.$$eval('a', getBoxes);
+	for(let i = 0; i < hrefs.length; i++){
+		client.hmset(pathSeed + ":" + i, hrefs[i]);
 	}
 	var pageTitle = await page.title();
 	client.set(url,pathSeed);
